@@ -14,3 +14,4 @@ set(EXAMPLE_SOURCES ${EXAMPLE_SOURCES}
 add_subdirectory(dockerterm)
 add_subdirectory(simple)
 add_subdirectory(terminal)
+add_subdirectory(snapshotdemo)
