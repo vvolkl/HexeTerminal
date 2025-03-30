@@ -19,11 +19,11 @@ set_property(TARGET implot PROPERTY CXX_STANDARD 11)
 include_directories(../implot/)
 
 set(SAMPLE_TERMINAL_SOURCES ${SAMPLE_TERMINAL_SOURCES}
-    "snapshotdemo.cpp" "networkwidget.cpp" 
+    "snapshotdemo.cpp" "networkwidget.cpp" "folderwatch.cpp" 
 )
 
 add_executable(snapshotdemo ${EXAMPLE_HEADERS} ${EXAMPLE_SOURCES} ${SAMPLE_TERMINAL_HEADERS} ${SAMPLE_TERMINAL_SOURCES})
-target_link_libraries(snapshotdemo PUBLIC SDL2::SDL2main SDL2::SDL2 imgui implot freetype HexeTerminal ImGuiTerminal GLEW::GLEW OpenGL::GL)
+target_link_libraries(snapshotdemo PUBLIC SDL2::SDL2main SDL2::SDL2 imgui implot freetype HexeTerminal ImGuiTerminal GLEW::GLEW OpenGL::GL pthread)
 target_include_directories(snapshotdemo PRIVATE "${imgui_SOURCE_DIR}/examples/")
 target_include_directories(snapshotdemo PRIVATE "$implot/")
 add_custom_command(TARGET snapshotdemo POST_BUILD

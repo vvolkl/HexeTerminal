@@ -13,6 +13,7 @@
 #undef min
 
 #include "networkwidget.cpp"
+#include "folderwatch.cpp"
 
 struct TerminalOptions
 {
@@ -58,8 +59,8 @@ int main(int argc, char *argv[])
 {
     TerminalOptions options{};
 
-    options.windowWidth = 3000;
-    options.windowHeight = 2000;
+    options.windowWidth = 2560;
+    options.windowHeight = 1444;
 
     std::filesystem::path basePath{SDL_GetBasePath()};
 
@@ -187,6 +188,12 @@ int main(int argc, char *argv[])
 
         // Create our network widget
     NetworkUsageWidget networkWidget(150); // 150 data points history
+    std::string pathname = "/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots";
+    FolderWatcherWidget folderWatcherContainerd("Containerd snapshots", pathname);
+
+    std::string pathname_cvmfs = "/var/lib/cvmfs/shared";
+    FolderWatcherWidget folderWatcherCvmfs("CVMFS Cache", pathname_cvmfs);
+
 
 
     std::string title = "CVMFS Snapshotter Demo";
@@ -268,13 +275,20 @@ int main(int argc, char *argv[])
             //ImGui::SetNextWindowSize(ImVec2{700,700});
             //ShowDemo_LinePlots();
             networkWidget.Render("Network Download Monitor", ImVec2(600, 600));
-             ImGui::SetNextWindowSize(ImVec2(1000, 2000));
-             ImGui::SetNextWindowPos(ImVec2{0,0});
 
+             ImGui::SetNextWindowSize(ImVec2(600, 600));
+             ImGui::SetNextWindowPos(ImVec2{1000,700});
+             folderWatcherContainerd.render();
+             ImGui::SetNextWindowSize(ImVec2(600, 600));
+             ImGui::SetNextWindowPos(ImVec2{1650, 550});
+             folderWatcherCvmfs.render();
+
+             ImGui::SetNextWindowSize(ImVec2(1000, 1200));
+             ImGui::SetNextWindowPos(ImVec2{0,0});
 
             if (ImGui::Begin("Terminal", &showTerminalWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration))
             {
-                auto scale = 2.f; //ImGui::GetFontSize() / fontDefault->FontSize;
+                auto scale = ImGui::GetFontSize() / fontDefault->FontSize;
 
                 auto contentRegion = ImGui::GetContentRegionAvail();
                 auto contentPos = ImGui::GetCursorScreenPos();
