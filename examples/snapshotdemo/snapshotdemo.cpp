@@ -7,7 +7,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "Hexe/Terminal/ImGuiTerminal.h"
-#include "implot.h"
+//#include "implot.h"
 
 #undef max
 #undef min
@@ -35,25 +35,6 @@ struct TerminalOptions
 
 #include "sn_font.h"
 
-void ShowDemo_LinePlots() {
-    static float xs1[1001], ys1[1001];
-    for (int i = 0; i < 1001; ++i) {
-        xs1[i] = i * 0.001f;
-        ys1[i] = 0.5f + 0.5f * sinf(50 * (xs1[i] + (float)ImGui::GetTime() / 10));
-    }
-    static double xs2[11], ys2[11];
-    for (int i = 0; i < 11; ++i) {
-        xs2[i] = i * 0.1f;
-        ys2[i] = xs2[i] * xs2[i];
-    }
-    ImGui::BulletText("Anti-aliasing can be enabled from the plot's context menu (see Help).");
-    if (ImPlot::BeginPlot("Line Plot", "x", "f(x)")) {
-        ImPlot::PlotLine("sin(x)", xs1, ys1, 1001);
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle);
-        ImPlot::PlotLine("x^2", xs2, ys2, 11);
-        ImPlot::EndPlot();
-    }
-}
 
 int main(int argc, char *argv[])
 {
@@ -115,7 +96,7 @@ int main(int argc, char *argv[])
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImPlot::CreateContext();
+    //ImPlot::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     (void)io;
 
@@ -341,7 +322,7 @@ int main(int argc, char *argv[])
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
-    ImPlot::DestroyContext();
+    //ImPlot::DestroyContext();
     ImGui::DestroyContext();
 
     if (gl_context)
